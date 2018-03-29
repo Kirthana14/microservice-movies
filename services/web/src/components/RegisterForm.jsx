@@ -49,7 +49,7 @@ class RegisterForm extends Component {
    
     switch(fieldName) {
       case 'username':
-        usernameValid = value.match(/^([\w]{3,})$/i) || value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ||  value.match(/^([\w.!@#$%&]{3,})$/i);
+        usernameValid = value.match(/^([\w]{3,})$/i) || value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ||  value.match(/^([\w.@$&]{3,})$/i);
         fieldValidationErrors.username = usernameValid ? '' : ' is invalid';
         break;
       case 'email':
