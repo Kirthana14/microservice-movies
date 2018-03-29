@@ -2,13 +2,13 @@ const request = require('request-promise');
 
 let ensureAuthenticated = (req, res, next) => {
   if (!(req.headers && req.headers.authorization)) {
-     // return res.status(400).json({ status: 'Please log in movie-service' });
+      return res.status(400).json({ status: 'Please log in movie-service' });
     // return res.status(400).json({ status: req.headers.authorization });
     //  return res.status(400).json({ status: req.headers });
     //  return res.status(400).json({ status: Bearer ${req.headers.authorization.split(' ')[1]} });
     //  return res.json({ status: 'hi'});
   }
-// res.json({ status: 'hi'});
+ // res.json({ status: 'hi'});
   const options = {
     method: 'GET',
     uri: 'http://users-service:3000/users/user',
@@ -25,7 +25,8 @@ let ensureAuthenticated = (req, res, next) => {
   .then((response) => {
     req.user = response.user;
     //res.json({ status: 'hi'});
-    return next();
+     return next();
+     //  return 1;
     
   })
   //.catch((err) => { return next(err); });

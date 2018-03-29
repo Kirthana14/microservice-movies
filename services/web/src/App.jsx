@@ -7,9 +7,7 @@ const API_URL = 'http://www.omdbapi.com/?apikey=c5a8df09&s='; // sample
 const USERS_SERVICE_URL = process.env.REACT_APP_USERS_SERVICE_URL;
 const MOVIES_SERVICE_URL = process.env.REACT_APP_MOVIES_SERVICE_URL;
 
-
 import './App.css';
-
 import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
 import LoginForm from './components/LoginForm';
@@ -39,18 +37,19 @@ class App extends Component {
   }
 
 
-
   searchMovie(term) {
     axios.get(`${API_URL}${term}`)
     .then((res) => { this.setState({ movies: res.data.Search }); })
     .catch((err) => { console.log(err); })
   }
+
   createFlashMessage (text, type = 'success') {
     const message = { text, type }
     this.setState({
       flashMessages: [...this.state.flashMessages, message]
     })
   }
+
   deleteFlashMessage (index) {
     if (index > 0) {
       this.setState({
@@ -65,8 +64,8 @@ class App extends Component {
       })
     }
   }
+
   registerUser (userData, callback) {
-   
     // return axios.post(`${USERS_SERVICE_URL}/users/register`, userData)
     return axios.post('http://localhost:3000/users/register', userData)
     .then((res) => {
@@ -82,8 +81,8 @@ class App extends Component {
       callback(errorMessage)
     })
   }
+
   loginUser (userData, callback) {
-  
    // return axios.post(`${USERS_SERVICE_URL}/users/login`, userData)
     return axios.post('http://localhost:3000/users/login', userData)
     .then((res) => {
@@ -95,27 +94,23 @@ class App extends Component {
       this.getMovies()
     })
     .catch((error) => {
-      callback('Failed')
-       
-       
+      callback('User Not Present !!!!! Please SIGNUP')
     })
   }
+
   getUser (userData, callback) {
-  
     return axios.post('http://localhost:3001/movies/user', userData)
     .then((res) => {
       window.localStorage.setItem('authToken', res.data.token)
       window.localStorage.setItem('user', res.data.user)
       this.setState({ isAuthenticated: true })
       this.createFlashMessage('You successfully got User details!')
-     
     })
     .catch((error) => {
       callback('Failed1')
-       
-       
     })
   }
+
   logoutUser (e) {
     e.preventDefault()
     window.localStorage.clear()
@@ -123,12 +118,13 @@ class App extends Component {
     this.props.history.push('/')
     this.createFlashMessage('You are now logged out.')
   }
+
   getCurrentUser () {
     return window.localStorage.user
   }
 
+
   saveMovie (movie) {
-    
     const options = {
       url: `${MOVIES_SERVICE_URL}/movies`,
       // url: 'http://localhost:3001/movies',
@@ -143,7 +139,6 @@ class App extends Component {
     };
     return axios(options)
     .then((res) => { 
-      
       this.createFlashMessage('You successfully saved in! !')
       this.getMovies() 
     })
@@ -212,9 +207,7 @@ class App extends Component {
               createFlashMessage={this.createFlashMessage}
               loginUser={this.loginUser} />
           )} />
-          
           <Route path='/collection' render={() => (
-           
             isAuthenticated         
             ? <SavedMovies
               createFlashMessage={this.createFlashMessage}

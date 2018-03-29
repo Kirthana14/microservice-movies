@@ -9,7 +9,8 @@ function createUser(req) {
   .insert({
     username: req.body.username,
     password: hash,
-  //  email: req.body.email,
+    email: req.body.email,
+    phone: req.body.phone,
   })
   .returning('*');
 }
@@ -25,10 +26,10 @@ function comparePass(userPassword, databasePassword) {
 /* eslint-disable consistent-return */
 function ensureAuthenticated(req, res, next) {
   if (!(req.headers && req.headers.authorization)) {
-    //return res.status(400).json({
-      //status: 'Please log in users-service',
-      //  status: req.headers.authorization,
-   // });
+    return res.status(400).json({
+      status: 'Please log in users-service',
+      //status: req.headers.authorization,
+    });
   }
 
   // decode the token
@@ -47,8 +48,8 @@ function ensureAuthenticated(req, res, next) {
     return knex('users').where({ id: parseInt(payload.sub, 10) }).first()
     .then((user) => {
       req.user = user.id;
-     // return res.json({ status: 'hi'});
-      return next();
+      return res.status(200).json({ status: 'hi'});
+     // return next();
     })
    .catch(() => {
       return res.status(500).json({

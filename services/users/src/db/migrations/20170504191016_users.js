@@ -3,7 +3,8 @@ exports.up = (knex) => {
     table.increments();
     table.string('username').unique().notNullable();
     table.string('password').notNullable();
-    //table.string('email');
+    table.string('email');
+    table.integer('phone');
     table.boolean('admin').notNullable().defaultTo(false);
     table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
   });
