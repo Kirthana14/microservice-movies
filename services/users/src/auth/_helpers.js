@@ -9,6 +9,7 @@ function createUser(req) {
   .insert({
     username: req.body.username,
     password: hash,
+  //  email: req.body.email,
   })
   .returning('*');
 }
@@ -24,27 +25,34 @@ function comparePass(userPassword, databasePassword) {
 /* eslint-disable consistent-return */
 function ensureAuthenticated(req, res, next) {
   if (!(req.headers && req.headers.authorization)) {
-    return res.status(400).json({
-      status: 'Please log in',
-    });
+    //return res.status(400).json({
+      //status: 'Please log in users-service',
+      //  status: req.headers.authorization,
+   // });
   }
+
   // decode the token
+  //res.json({ status: 'hi'}); 
   const header = req.headers.authorization.split(' ');
   const token = header[1];
+ // res.json({ status: header}); 
   localAuth.decodeToken(token, (err, payload) => {
+    //res.json({ status: 'hi'});
     if (err) {
       return res.status(401).json({
         status: 'Token has expired',
       });
     }
+    
     return knex('users').where({ id: parseInt(payload.sub, 10) }).first()
     .then((user) => {
       req.user = user.id;
+     // return res.json({ status: 'hi'});
       return next();
     })
-    .catch(() => {
+   .catch(() => {
       return res.status(500).json({
-        status: 'error',
+        status: 'error in user-service',
       });
     });
   });

@@ -32,7 +32,7 @@ app.use((err, req, res, next) => {
   const message = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
   res.json({
-    status: 'error',
+    status: 'error in movies',
     message: err,
   });
 });

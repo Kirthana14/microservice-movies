@@ -9,6 +9,7 @@ exports.seed = (knex, Promise) => {
       knex('users').insert({
         username: 'michael',
         password: hash,
+       // email: 'michael@gmail.com',
       }) // eslint-disable-line
     );
   })

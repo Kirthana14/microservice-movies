@@ -40,11 +40,6 @@ class App extends Component {
 
 
 
- 
-
-
-
-
   searchMovie(term) {
     axios.get(`${API_URL}${term}`)
     .then((res) => { this.setState({ movies: res.data.Search }); })
@@ -152,7 +147,7 @@ class App extends Component {
       this.createFlashMessage('You successfully saved in! !')
       this.getMovies() 
     })
-    .catch((error) => { console.log(error); })
+    .catch((error) => { console.log('not found'); })
   }
 
 
@@ -170,7 +165,7 @@ class App extends Component {
     .then((res) => {
       this.setState({ saved: res.data.data});
     })
-    .catch((err) => { console.log(err); })
+    .catch((err) => { console.log('not found'); })
   }
 
   render () {

@@ -21,7 +21,7 @@ router.get('/user', routeHelpers.ensureAuthenticated, (req, res, next) => {
       data: movies,
     });
   })
-  .catch((err) => { return next(err); });
+  //.catch((err) => { return next(err); });
 });
 /* eslint-enable no-param-reassign */
 
@@ -37,7 +37,7 @@ router.post('/', routeHelpers.ensureAuthenticated, (req, res, next) => {
       data: 'Movie Added!',
     });
   })
-  .catch((err) => { return next(err); });
+  //.catch((err) => { return next(err); });
 });
 
 module.exports = router;
